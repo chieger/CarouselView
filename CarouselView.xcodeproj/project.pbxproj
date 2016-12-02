@@ -14,6 +14,10 @@
 		ED6F36D11DEFB7B8009ABE17 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED6F36CF1DEFB7B8009ABE17 /* LaunchScreen.storyboard */; };
 		ED6F36DC1DEFB7B8009ABE17 /* CarouselViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F36DB1DEFB7B8009ABE17 /* CarouselViewTests.swift */; };
 		ED6F36E71DEFB7B8009ABE17 /* CarouselViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F36E61DEFB7B8009ABE17 /* CarouselViewUITests.swift */; };
+		ED6F36F51DF09DA5009ABE17 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F36F41DF09DA5009ABE17 /* CarouselView.swift */; };
+		ED6F37331DF0CB00009ABE17 /* CarouselView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED6F37321DF0CB00009ABE17 /* CarouselView.xib */; };
+		ED6F37361DF0E0F4009ABE17 /* CarouselCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED6F37351DF0E0F4009ABE17 /* CarouselCell.xib */; };
+		ED6F37381DF0E16B009ABE17 /* CarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6F37371DF0E16B009ABE17 /* CarouselCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		ED6F36E21DEFB7B8009ABE17 /* CarouselViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarouselViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED6F36E61DEFB7B8009ABE17 /* CarouselViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselViewUITests.swift; sourceTree = "<group>"; };
 		ED6F36E81DEFB7B8009ABE17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED6F36F41DF09DA5009ABE17 /* CarouselView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		ED6F37321DF0CB00009ABE17 /* CarouselView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselView.xib; sourceTree = "<group>"; };
+		ED6F37351DF0E0F4009ABE17 /* CarouselCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CarouselCell.xib; sourceTree = "<group>"; };
+		ED6F37371DF0E16B009ABE17 /* CarouselCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarouselCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,8 +105,9 @@
 		ED6F36C51DEFB7B8009ABE17 /* CarouselView */ = {
 			isa = PBXGroup;
 			children = (
-				ED6F36C61DEFB7B8009ABE17 /* AppDelegate.swift */,
 				ED6F36C81DEFB7B8009ABE17 /* ViewController.swift */,
+				ED6F37341DF0DFE3009ABE17 /* CarouselView */,
+				ED6F36C61DEFB7B8009ABE17 /* AppDelegate.swift */,
 				ED6F36CA1DEFB7B8009ABE17 /* Main.storyboard */,
 				ED6F36CD1DEFB7B8009ABE17 /* Assets.xcassets */,
 				ED6F36CF1DEFB7B8009ABE17 /* LaunchScreen.storyboard */,
@@ -123,6 +132,17 @@
 				ED6F36E81DEFB7B8009ABE17 /* Info.plist */,
 			);
 			path = CarouselViewUITests;
+			sourceTree = "<group>";
+		};
+		ED6F37341DF0DFE3009ABE17 /* CarouselView */ = {
+			isa = PBXGroup;
+			children = (
+				ED6F36F41DF09DA5009ABE17 /* CarouselView.swift */,
+				ED6F37321DF0CB00009ABE17 /* CarouselView.xib */,
+				ED6F37351DF0E0F4009ABE17 /* CarouselCell.xib */,
+				ED6F37371DF0E16B009ABE17 /* CarouselCell.swift */,
+			);
+			name = CarouselView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,7 +257,9 @@
 			files = (
 				ED6F36D11DEFB7B8009ABE17 /* LaunchScreen.storyboard in Resources */,
 				ED6F36CE1DEFB7B8009ABE17 /* Assets.xcassets in Resources */,
+				ED6F37361DF0E0F4009ABE17 /* CarouselCell.xib in Resources */,
 				ED6F36CC1DEFB7B8009ABE17 /* Main.storyboard in Resources */,
+				ED6F37331DF0CB00009ABE17 /* CarouselView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +286,8 @@
 			files = (
 				ED6F36C91DEFB7B8009ABE17 /* ViewController.swift in Sources */,
 				ED6F36C71DEFB7B8009ABE17 /* AppDelegate.swift in Sources */,
+				ED6F36F51DF09DA5009ABE17 /* CarouselView.swift in Sources */,
+				ED6F37381DF0E16B009ABE17 /* CarouselCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,6 +538,7 @@
 				ED6F36ED1DEFB7B8009ABE17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ED6F36EE1DEFB7B8009ABE17 /* Build configuration list for PBXNativeTarget "CarouselViewTests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +547,7 @@
 				ED6F36F01DEFB7B8009ABE17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ED6F36F11DEFB7B8009ABE17 /* Build configuration list for PBXNativeTarget "CarouselViewUITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +556,7 @@
 				ED6F36F31DEFB7B8009ABE17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
