@@ -9,11 +9,11 @@
 import UIKit
 
 @objc protocol CarouselViewDelegate: UICollectionViewDelegate {
-    @objc optional func carouselView(_ RevolvingCarouselView: CarouselView, didSelectItemAt index: Int)
+    @objc optional func carouselView(_ carouselView: CarouselView, didSelectItemAt index: Int)
 }
 
 @objc protocol CarouselViewDataSource {
-    func carouselView(_ revolvingCarouselView: CarouselView, numberOfItems items: Int) -> Int
+    func carouselView(_ carouselView: CarouselView, numberOfItemsInSection section: Int) -> Int
 
     func carouselView(_ carouselView: CarouselView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
 }
@@ -69,10 +69,17 @@ extension CarouselView: UICollectionViewDelegate {
 
 extension CarouselView: UICollectionViewDataSource {
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource?.carouselView(self, numberOfItems: section) ?? 0
+        let bufferSectionsPerSide = 1
+        if let items = dataSource?.carouselView(self, numberOfItemsInSection: section) {
+            return items * bufferSectionsPerSide * 3
+        } else {
+            return 0
+        }
     }
 
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let adjustedIndexPathItem = indexPath.row % dataSource!.carouselView(self, numberOfItemsInSection: 0)
+        let indexPath = IndexPath(item: adjustedIndexPathItem, section: 0)
         return dataSource!.carouselView(self, cellForItemAt: indexPath)
     }
 }

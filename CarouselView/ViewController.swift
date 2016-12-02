@@ -38,14 +38,15 @@ extension ViewController: CarouselViewDelegate {
 }
 
 extension ViewController: CarouselViewDataSource {
-    func carouselView(_ carouselView: CarouselView, numberOfItems items: Int) -> Int {
+    func carouselView(_ carouselView: CarouselView, numberOfItemsInSection section: Int) -> Int {
         return colors.count
 
     }
 
     func carouselView(_ carouselView: CarouselView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = carouselView.collectionView.dequeueReusableCell(withReuseIdentifier: "CarouselCell", for: indexPath)
+        let cell = carouselView.collectionView.dequeueReusableCell(withReuseIdentifier: "CarouselCell", for: indexPath) as! CarouselCell
         cell.backgroundColor = colors[indexPath.row]
+        
         return cell
     }
 }
