@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var carouselView: CarouselView!
 
-    let colors = [UIColor.red, UIColor.green, UIColor.blue]
+    let colors = [UIColor.red, UIColor.green, UIColor.blue, UIColor.purple, UIColor.orange]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,8 +23,7 @@ class ViewController: UIViewController {
         carouselView.dataSource = self
 
         let nib = UINib(nibName: "CarouselCell", bundle: nil)
-        carouselView.collectionView.register(nib, forCellWithReuseIdentifier: "CarouselCell")
-
+        carouselView.register(nib: nib, forCellWithReuseIdentifier: "CarouselCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,15 +37,15 @@ extension ViewController: CarouselViewDelegate {
 }
 
 extension ViewController: CarouselViewDataSource {
-    func carouselView(_ carouselView: CarouselView, numberOfItemsInSection section: Int) -> Int {
+    func numberOfItems(in carouselView: CarouselView) -> Int {
         return colors.count
-
     }
 
-    func carouselView(_ carouselView: CarouselView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = carouselView.collectionView.dequeueReusableCell(withReuseIdentifier: "CarouselCell", for: indexPath) as! CarouselCell
-        cell.backgroundColor = colors[indexPath.row]
-        
+    func carouselView(carouselView: CarouselView, cellForItemAt index: Int) -> UICollectionViewCell {
+        let cell = carouselView.dequeueReusableCell(withReuseIdentifier: "CarouselCell", forIndex: index) as! CarouselCell
+
+        cell.backgroundColor = colors[index]
+
         return cell
     }
 }
