@@ -14,7 +14,6 @@ import UIKit
 
 @objc protocol CarouselViewDataSource {
     func numberOfItems(in carouselView: CarouselView) -> Int
-
     func carouselView(carouselView: CarouselView, cellForItemAt index: Int) -> UICollectionViewCell
 }
 
@@ -27,14 +26,26 @@ class CarouselView: UIView {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var pageControl: UIPageControl!
 
-    var showsIndicatorDots: Bool = true
+    var showsIndicatorDots: Bool = true {
+        didSet {
+           pageControl.isHidden = !showsIndicatorDots
+        }
+    }
 
-    var numItems: Int = 0 {
+    internal var numItems: Int = 0 {
         didSet {
             pageControl.numberOfPages = numItems
         }
     }
-    let bufferSectionsPerSide = 1
+
+    internal var adjNumItems: Int {
+        return paddingItems * 2 + numItems
+    }
+
+    internal var paddingItems: Int {
+        let paddingSections = 1
+        return numItems * paddingSections
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,6 +60,7 @@ class CarouselView: UIView {
     private func initSubviews() {
         let xib = UINib(nibName: "CarouselView", bundle: Bundle(for: type(of: self)))
         xib.instantiate(withOwner: self, options: nil)
+
         addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = true
         contentView.frame = bounds
@@ -56,7 +68,6 @@ class CarouselView: UIView {
 
         collectionView.delegate = self
         collectionView.dataSource = self
-
     }
 
     override func layoutSubviews() {
@@ -72,17 +83,11 @@ class CarouselView: UIView {
 
     internal func reset() {
         DispatchQueue.main.async {
-            var currentIndex = 0
-
-            if let visibleCell = self.collectionView.visibleCells.first {
-                let indexPath = self.collectionView.indexPath(for: visibleCell)!
-                currentIndex = indexPath.item
-            }
-
-            let index = currentIndex % self.numItems + self.numItems * self.bufferSectionsPerSide
-            self.pageControl.currentPage = index % self.numItems
+            let currentIndex = self.indexForCurrentCell()
+            let index = self.adjustedIndexWith(currentIndex: currentIndex) + self.paddingItems
             let indexPath = IndexPath(item: index, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
+            self.pageControl.currentPage = self.adjustedIndexWith(currentIndex: currentIndex)
         }
     }
 
@@ -94,33 +99,44 @@ class CarouselView: UIView {
         let indexPath = IndexPath(item: index, section: 0)
         return collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
     }
+
+    internal func adjustedIndexWith(currentIndex index: Int) -> Int {
+        return index % numItems
+    }
+
+    internal func indexForCurrentCell() -> Int {
+        var index = 0
+        if let visibleCell = self.collectionView.visibleCells.first {
+            let indexPath = self.collectionView.indexPath(for: visibleCell)!
+            index = indexPath.item
+        }
+        return index
+    }
 }
 
 extension CarouselView: UICollectionViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    internal func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         reset()
     }
 
     internal func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        delegate?.carouselView?(self, didSelectItemAt: indexPath.item)
+        let index = indexPath.item
+        let adjustedIndex = adjustedIndexWith(currentIndex: index)
+        delegate?.carouselView?(carouselView: self, didSelectItemAt: adjustedIndex)
     }
 }
 
 extension CarouselView: UICollectionViewDataSource {
     internal func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let bufferSectionsPerSide = 1
-
-        return numItems * bufferSectionsPerSide * 2 + numItems
+        return adjNumItems
     }
 
     internal func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let adjustedIndexPathItem = indexPath.row % numItems
-        return dataSource!.carouselView(carouselView: self, cellForItemAt: adjustedIndexPathItem)
+        let index = indexPath.item
+        let adjustedIndex = adjustedIndexWith(currentIndex: index)
+        return dataSource!.carouselView(carouselView: self, cellForItemAt: adjustedIndex)
     }
-
 }
-
-
 
 extension CarouselView: UICollectionViewDelegateFlowLayout {
     internal func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

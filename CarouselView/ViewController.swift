@@ -29,14 +29,16 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    
 }
-extension ViewController: CarouselViewDelegate {
 
+extension ViewController: CarouselViewDelegate {
+    func carouselView(carouselView: CarouselView, didSelectItemAt index: Int) {
+        print("selected item at index \(index)")
+    }
 }
 
 extension ViewController: CarouselViewDataSource {
+
     func numberOfItems(in carouselView: CarouselView) -> Int {
         return colors.count
     }
